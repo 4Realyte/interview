@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DemoServiceImpl implements DemoService {
     AuthorRepository repository;
-    ValidateBookService validateBookService;
+    BookRepository bookRepository;
 
     @Override
     @Transactional
@@ -28,7 +28,7 @@ public class DemoServiceImpl implements DemoService {
                 .title("War and Piece")
                 .build();
         try {
-            validateBookService.validateBookTitle(book.getTitle());
+            validateBookTitle(book.getTitle());
         } catch (IllegalArgumentException exception) {
             book.setTitle("short");
         }
@@ -36,17 +36,10 @@ public class DemoServiceImpl implements DemoService {
         repository.save(author);
     }
 
-    @Service
-    @RequiredArgsConstructor
-    @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-    static class ValidateBookService {
-        BookRepository bookRepository;
-
-        @Transactional
-        public void validateBookTitle(String title) {
-            if (title.length() > 5 || bookRepository.existsByTitle(title)) {
-                throw new IllegalArgumentException();
-            }
+    @Transactional
+    public void validateBookTitle(String title) {
+        if (title.length() > 5 || bookRepository.existsByTitle(title)) {
+            throw new IllegalArgumentException();
         }
     }
 
