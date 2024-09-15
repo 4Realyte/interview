@@ -23,7 +23,7 @@ public class DemoService {
         Author author = repository.findAll().stream().findFirst().orElseThrow();
         transactionService.doInTransaction(() -> {
             author.addBook(Book.builder()
-                    .title("War and Piece")
+                    .title("War and Peace")
                     .build());
             repository.save(author);
         });

@@ -16,8 +16,25 @@ spring:
     properties:
       hibernate:
         format_sql: true
-    show-sql: true
     defer-datasource-initialization: true
   sql:
     init:
       mode: always
+
+logging:
+  level:
+    org:
+      springframework:
+        transaction: TRACE
+        orm:
+          jpa:
+            JpaTransactionManager: DEBUG
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        orm:
+          jdbc:
+            bind: TRACE
+        SQL: DEBUG
