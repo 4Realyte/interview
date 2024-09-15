@@ -25,7 +25,7 @@ public class DemoServiceImpl implements DemoService {
     public void saveAuthorWithBooks() {
         Author author = repository.findAll().stream().findFirst().orElseThrow();
         Book book = Book.builder()
-                .title("War and Piece")
+                .title("War and Peace")
                 .build();
         try {
             validateBookService.validateBookTitle(book.getTitle());
